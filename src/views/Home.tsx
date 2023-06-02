@@ -3,7 +3,7 @@ import { Link, Outlet } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import useGetData from '../http'
 import { podcastsAtom, selectedPodcast } from '../store/atoms'
-
+import Filter from '../components/Filter'
 const url =
   'https://itunes.apple.com/us/rss/toppodcasts/limit=100/genre=1310/json'
 
@@ -29,7 +29,8 @@ const Home = () => {
 
   return (
     <div className="grid-container">
-      <div className="grid  ">
+      {data && <Filter />}
+      <div className="grid">
         {error && (
           <div>
             <p>{error.message}</p>

@@ -2,17 +2,13 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useRecoilState } from 'recoil'
 import { loadingAtom } from '../store/atoms'
-import {
-  ErrorResponse,
-  GetDataProps,
-  PodcastResponse,
-} from '../interfaces/podcastsInterfaces'
+import { GetDataProps } from '../interfaces/podcastsInterfaces'
 
 const useGetData = ({ url }: GetDataProps) => {
-  const [response, setResponse] = useState<PodcastResponse | null>(null)
-  const [error, setError] = useState<ErrorResponse | null>(null)
+  const [response, setResponse] = useState<any>(null)
+  const [error, setError] = useState<any>(null)
   const [loading, setLoading] = useState<boolean>(true)
-  const [, setLoadingState] = useRecoilState<boolean>(loadingAtom)
+  const [, setLoadingState] = useRecoilState(loadingAtom)
 
   const fetchData = () => {
     console.log('running')
@@ -22,8 +18,11 @@ const useGetData = ({ url }: GetDataProps) => {
         setResponse(JSON.parse(res.data.contents))
       })
       .catch((err) => {
-        setError(err)
-        console.log('error', err)
+        if (axios.isAxiosError(error)) {
+          setError('Axios Error with Message: ' + err.message)
+        } else {
+          setError(error)
+        }
       })
       .finally(() => {
         setLoading(false)
@@ -35,7 +34,6 @@ const useGetData = ({ url }: GetDataProps) => {
     setLoadingState(true)
     fetchData()
   }, [])
-
   return { response, error, loading, fetchData }
 }
 

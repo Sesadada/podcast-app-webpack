@@ -1,11 +1,21 @@
+import { AxiosResponse } from 'axios'
+
 export interface ErrorResponse {
   message: string
   // Other properties if present in the error object
 }
 
+export type ResponseData<T> = {
+  response: AxiosResponse<T> | null
+  error: string
+  loading: boolean
+  fetchData: () => void
+}
+
 export interface GetDataProps {
   url: string
 }
+
 interface PodcastEntry {
   attributes: {
     // Define the attributes of the entry object
