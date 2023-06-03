@@ -6,13 +6,19 @@ To install the application
 npm install
 ```
 
-To see the application in dev mode:
+To see the development build in local server:
 
 ```
-npm start
+npm run start
 ```
 
-To build it and see the production build served into localhost move into the build folder and:
+To build the app:
+
+```
+npm run build
+```
+
+To see the production build served into localhost move into the build folder and:
 
 ```
 npx serve
